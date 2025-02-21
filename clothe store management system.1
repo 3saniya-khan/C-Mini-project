@@ -1,0 +1,117 @@
+#include <iostream>
+#include <vector>
+#include <string>
+
+using namespace std;
+
+class ClothItem {
+public:
+    string name;
+    string category;
+    float price;
+    int quantity;
+
+    ClothItem(string n, string c, float p, int q) {
+        name = n;
+        category = c;
+        price = p;
+        quantity = q;
+    }
+};
+
+class ClothStore {
+private:
+    vector<ClothItem> inventory;
+
+public:
+    void addItem() {
+        string name, category;
+        float price;
+        int quantity;
+
+        cout << "Enter item name: ";
+        cin >> name;
+        cout << "Enter item category: ";
+        cin >> category;
+        cout << "Enter item price: ";
+        cin >> price;
+        cout << "Enter item quantity: ";
+        cin >> quantity;
+
+        ClothItem newItem(name, category, price, quantity);
+        inventory.push_back(newItem);
+        cout << "Item added successfully!\n";
+    }
+
+    void displayItems() {
+        if (inventory.empty()) {
+            cout << "No items in inventory.\n";
+            return;
+        }
+
+        cout << "\nInventory:\n";
+        for (const auto& item : inventory) {
+            cout << "Name: " << item.name
+                 << ", Category: " << item.category
+                 << ", Price: " << item.price
+                 << ", Quantity: " << item.quantity << endl;
+        }
+    }
+
+    void searchItem() {
+        string name;
+        cout << "Enter item name to search: ";
+        cin >> name;
+
+        bool found = false;
+        for (const auto& item : inventory) {
+            if (item.name == name) {
+                cout << "Item found: "
+                     << "Name: " << item.name
+                     << ", Category: " << item.category
+                     << ", Price: " << item.price
+                     << ", Quantity: " << item.quantity << endl;
+                found = true;
+                break;
+            }
+        }
+
+        if (!found) {
+            cout << "Item not found.\n";
+        }
+    }
+};
+
+int main() {
+    ClothStore store;
+    int choice;
+
+    do {
+        cout << "\nCloth Store Management System\n";
+        cout << "1. Add Item\n";
+        cout << "2. Display Items\n";
+        cout << "3. Search Item\n";
+        cout << "4. Exit\n";
+        cout << "Enter your choice: ";
+        cin >> choice;
+
+        switch (choice) {
+            case 1:
+                store.addItem();
+                break;
+            case 2:
+                store.displayItems();
+                break;
+            case 3:
+                store.searchItem();
+                break;
+            case 4:
+                cout << "Exiting the system.\n";
+                break;
+            default:
+                cout << "Invalid choice. Please try again.\n";
+        }
+    } while (choice != 4);
+
+    return 0;
+}
